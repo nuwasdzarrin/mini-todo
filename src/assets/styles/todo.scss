@@ -1,3 +1,12 @@
+@import "colors.module";
+@import url('https://fonts.googleapis.com/css?family=Nunito+Sans:400,400i,700,800,800i,900i&display=swap');
+
+body {
+    font-family: 'Nunito Sans', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
 #error-page {
     width: 100%;
     height: 95vh;
@@ -5,4 +14,122 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
+}
+.tod {
+    &MarginRight10 {
+        margin-right: 10px;
+    }
+    &MarginY8 {
+        margin-top: 8px;
+        margin-bottom: 8px;
+    }
+    &MarginY10 {
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+    &Flex {
+        display: flex;
+    }
+    &FlexCenterStart {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+    }
+    &FlexBetween {
+        display: flex;
+        justify-content: space-between;
+    }
+    &HeaderPage {
+        padding: 15px;
+        .title {
+            font-weight: 700;
+            font-size: 18px;
+            line-height: 28px;
+            color: #1E1F21;
+        }
+    }
+    &HrHeaderPage {
+        margin: 0;
+        border-color: #E0E0E0;
+    }
+    &GroupCard {
+        padding: 16px;
+        border-radius: 4px;
+        border: 1px solid;
+        &.primary {
+            background: #F7FEFF;
+            border-color: $primaryColor;
+        }
+        &.secondary {
+            background: #FFFCF5;
+            border-color: $secondaryColor;
+        }
+        &.danger {
+            background: #FFFAFA;
+            border-color: $dangerColor;
+        }
+        &.success {
+            background: #F8FBF9;
+            border-color: $successColor;
+        }
+        .groupLabel {
+            padding: 2px 8px;
+            border-radius: 4px;
+            border: 1px solid;
+            font-size: 12px;
+            &.primary {
+                border-color: $primaryColor;
+                color: $primaryColor;
+            }
+            &.secondary {
+                border-color: $secondaryColor;
+                color: $textWarning;
+            }
+            &.danger {
+                border-color: $dangerColor;
+                color: $textDanger;
+            }
+            &.success {
+                border-color: $successColor;
+                color: $textSuccess;
+            }
+        }
+        .monthLabel {
+            font-weight: 700;
+            font-size: 12px;
+            color: $textDark;
+        }
+    }
+    &GroupTask {
+        padding: 16px;
+        background: $bgGroupTask;
+        border: 1px solid $borderGroupTask;
+        border-radius: 4px;
+        margin-bottom: 8px;
+        .title {
+            font-weight: 700;
+            font-size: 14px;
+            color: $textDark;
+        }
+        hr {
+            border-top: 1px dashed $borderGroupTask;
+        }
+    }
+    &LinearProgress {
+        height: 16px!important;
+        border-radius: 10px;
+        .MuiLinearProgress-bar2Buffer {
+            background-color: $bgProgressBar;
+        }
+        &.complete {
+            .MuiLinearProgress-bar1Buffer {
+                background-color: $progressGreen;
+            }
+        }
+        &.incomplete {
+            .MuiLinearProgress-bar1Buffer {
+                background-color: $primaryColor;
+            }
+        }
+    }
 }

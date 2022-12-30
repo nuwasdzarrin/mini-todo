@@ -1,0 +1,22 @@
+$primaryColor: #01959F;
+$secondaryColor: #FEEABC;
+$dangerColor: #F5B1B7;
+$successColor: #B8DBCA;
+
+$textDark: #404040;
+$textNewTask: #1D1F20;
+$textWarning: #FA9810;
+$textDanger: #E11428;
+$textSuccess: #43936C;
+
+$bgGroupTask: #FAFAFA;
+$bgProgressBar: #EDEDED;
+$borderGroupTask: #E0E0E0;
+
+$progressGreen: #43936C;
+
+:export {
+  primary: $primaryColor;
+  textNewTask: $textNewTask;
+  progressGreen: $progressGreen;
+}
