@@ -2,6 +2,7 @@ import * as React from 'react';
 import {Box, Grid, LinearProgress, Typography} from '@mui/material';
 import {MoreHoriz as MoreHorizIcon, CheckCircle as CheckCircleIcon} from '@mui/icons-material';
 import colors from '../../assets/styles/_colors.module.scss';
+import ControlModal from "../modals/ControlModal";
 
 
 export default function GroupTask () {
@@ -25,7 +26,10 @@ export default function GroupTask () {
                     </div>
                 </Grid>
                 <Grid item justifyContent="flex-end" xs={2} style={{textAlign: 'right'}}>
-                    <MoreHorizIcon/>
+                    <Box sx={{position: 'relative'}}>
+                        <MoreHorizIcon />
+                        <ControlModal />
+                    </Box>
                 </Grid>
             </Grid>
         </div>
