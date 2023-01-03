@@ -5,7 +5,7 @@ import {ControlPoint as ControlPointIcon} from "@mui/icons-material";
 import {Button} from "@mui/material";
 import colors from "../../assets/styles/_colors.module.scss";
 import {connect} from "react-redux";
-import {setModalAddActive, setModalForm} from "../../store/actions/todoAction";
+import {setModalForm} from "../../store/actions/todoAction";
 
 
 const GroupCard = (props) => {
@@ -26,7 +26,8 @@ const GroupCard = (props) => {
                     is_show: true,
                     type: 'add',
                     data: {
-                        group_id: data.id
+                        group_id: data.id,
+                        group_name: data.title
                     }
                 })
             }>
@@ -35,12 +36,10 @@ const GroupCard = (props) => {
         </div>
     )
 }
-const mapStateToProps = state => ({
-
-})
+const mapStateToProps = state => ({})
 
 const mapDispatchToProps = {
-    setModalAddActive, setModalForm
+    setModalForm
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(GroupCard)

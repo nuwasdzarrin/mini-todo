@@ -40,7 +40,7 @@ const Api = {
             return Axios.post(Path.todo_item.base.replace("{parent_id}", parent_id), data);
         },
         update: (parent_id, id, data) => {
-            return Axios.put(
+            return Axios.patch(
                 Path.todo_item.detail.replace("{parent_id}", parent_id).replace("{id}", id), data);
         },
         destroy: (parent_id, id) => {

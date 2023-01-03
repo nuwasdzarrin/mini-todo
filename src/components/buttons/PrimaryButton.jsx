@@ -15,7 +15,7 @@ export default function PrimaryButton (props) {
         },
     }));
     return (
-        <TodSuccessButton variant={'contained'} className={'todBtnSuccess'} startIcon={props.icon}>
+        <TodSuccessButton variant={'contained'} className={'todBtnSuccess'} startIcon={props.icon} type={'submit'}>
             {props.label}
         </TodSuccessButton>
     )

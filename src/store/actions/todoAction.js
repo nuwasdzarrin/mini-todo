@@ -10,23 +10,30 @@ const getTodos = () => dispatch => {
                 return Api.todo_item.index(parent_id, {})
             }
             let promises = []
-            res.data.forEach(d => {
+            let group_id_list = res.data.sort((a, b) => a.id - b.id).map(m => m.id)
+            res.data.forEach((d, key) => {
                 promises.push(getItem(d.id).then(response => {
-                    new_group.push({...d, items: response.data})
+                    new_group.push({
+                        ...d,
+                        items: response.data.map(dt => {
+                            return {
+                                ...dt,
+                                left: key > 0 ? group_id_list[key-1] : null,
+                                right: key < group_id_list.length - 1 ? group_id_list[key+1] : null
+                            }
+                        })
+                    })
                 }))
             })
             Promise.all(promises).then((result) => {
                 dispatch({
-                    type: 'GET_TODOS',
-                    payload: new_group
+                    type: types.GET_TODOS,
+                    payload: new_group.sort((a, b) => a.id - b.id)
                 })
             })
         })
     } catch (e) {
-        dispatch({
-            type: 'TODOS_ERROR',
-            payload: console.log(e),
-        })
+        console.log(e)
     }
 }
 
@@ -52,12 +59,5 @@ const closeModalForm = () => {
         type: types.CLOSE_MODAL_FORM
     }
 }
-const setModalAddActive = (payload) => {
-    console.log("ini dia payload: ", payload)
-    return {
-        type: types.SET_MODAL_ADD,
-        payload: payload
-    }
-}
 
-export {getTodos, storeTodos, setActionActive, setModalAddActive, setModalForm, closeModalForm};
+export {getTodos, storeTodos, setActionActive, setModalForm, closeModalForm};

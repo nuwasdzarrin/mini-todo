@@ -8,8 +8,6 @@ const initialState = {
         data: {}
     },
     is_modal_control: null,
-    is_modal_add: false,
-    is_modal_edit: null,
     loading: true
 }
 
@@ -18,7 +16,7 @@ export default function(state = initialState, action){
     console.log("reducer action payload: ", action.payload)
     let {type, payload} = action
     switch(type){
-        case 'GET_TODOS':
+        case types.GET_TODOS:
             return {
                 ...state,
                 todos: payload,
@@ -46,16 +44,6 @@ export default function(state = initialState, action){
                     ...state.modal_form,
                     is_show: false
                 }
-            }
-        case types.SET_MODAL_ADD:
-            return {
-                ...state,
-                is_modal_add: payload
-            }
-        case types.SET_MODAL_EDIT:
-            return {
-                ...state,
-                is_modal_edit: payload
             }
         default: return state
     }

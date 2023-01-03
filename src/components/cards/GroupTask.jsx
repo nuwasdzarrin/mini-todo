@@ -33,7 +33,7 @@ const GroupTask= (props) => {
                         <MoreHorizIcon onClick={() => {
                             props.setActionActive(props.is_modal_control === data.id ? null : data.id)
                         }} />
-                        { props.is_modal_control === data.id && <ControlModal/> }
+                        { props.is_modal_control === data.id && <ControlModal data={data}/> }
                     </Box>
                 </Grid>
             </Grid>
