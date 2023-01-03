@@ -1,20 +1,21 @@
-import * as React from 'react';
+import React, {useEffect} from 'react';
 import {
     CardContent,
     Grid,
     FormControl,
-    InputLabel,
-    Input,
-    FormHelperText,
-    TextField,
     OutlinedInput
 } from "@mui/material";
 import PrimaryButton from "../components/buttons/PrimaryButton";
 import {Add as AddIcon} from '@mui/icons-material';
 import GroupCard from "../components/cards/GroupCard";
 import MasterModal from "../components/modals/MasterModal";
+import {connect} from "react-redux";
+import {getTodos} from "../store/actions/todoAction";
 
-export default function TodoPage() {
+const TodoPage = ({todos, modal_form, getTodos}) => {
+    useEffect(() => {
+        getTodos()
+    }, [getTodos])
     const HeaderPage = () => {
         return (
             <div className={'todFlexCenterStart todHeaderPage'}>
@@ -55,7 +56,13 @@ export default function TodoPage() {
         )
     }
     const ModalTitle = () => {
-      return <div className={'title'}>Create Task</div>
+        return <div className={'title'}>Create Task</div>
+    }
+    const convertType = (payload) => {
+        if (payload===1) return 'secondary'
+        else if (payload===2) return 'danger'
+        else if (payload===3) return 'success'
+        else return 'primary'
     }
     return (
         <>
@@ -63,21 +70,22 @@ export default function TodoPage() {
             <hr className={'todHrHeaderPage'}/>
             <CardContent>
                 <Grid container spacing={2}>
-                    <Grid item xs={12} md={3}>
-                        <GroupCard type={'primary'} />
-                    </Grid>
-                    <Grid item xs={12} md={3}>
-                        <GroupCard type={'secondary'} />
-                    </Grid>
-                    <Grid item xs={12} md={3}>
-                        <GroupCard type={'danger'} />
-                    </Grid>
-                    <Grid item xs={12} md={3}>
-                        <GroupCard type={'success'} />
-                    </Grid>
+                    {
+                        todos.map((todo, key) =>
+                            <Grid item xs={12} md={3} key={key}>
+                                <GroupCard type={convertType(key)} data={todo} />
+                            </Grid>
+                        )
+                    }
                 </Grid>
             </CardContent>
-            {/*<MasterModal title={<ModalTitle />} content={<FromAddTask />} />*/}
+            {modal_form.is_show && <MasterModal title={<ModalTitle/>} content={<FromAddTask/>}/>}
         </>
     )
 }
+
+const mapStateToProps = state => ({
+    todos: state.todoReducer.todos,
+    modal_form: state.todoReducer.modal_form,
+})
+export default connect(mapStateToProps,{getTodos})(TodoPage)

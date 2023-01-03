@@ -7,29 +7,29 @@ import RegisterPage from "./pages/RegisterPage";
 import "./assets/styles/todo.scss";
 
 const router = createBrowserRouter([
-  {
-      path: "/",
-      element: <TodoLayout />,
-      errorElement: <ErrorLayout />,
-      children: [
-        {
-          path: "/",
-          element: <TodoPage />,
-        },
-        {
-          path: "/login",
-          element: <LoginPage />,
-        },
-        {
-          path: "/register",
-          element: <RegisterPage />,
-        }
-      ]
-  }
+    {
+        path: "/",
+        element: <TodoLayout />,
+        errorElement: <ErrorLayout />,
+        children: [
+            {
+                path: "/",
+                element: <TodoPage />,
+            },
+            {
+                path: "/login",
+                element: <LoginPage />,
+            },
+            {
+                path: "/register",
+                element: <RegisterPage />,
+            }
+        ]
+    }
 ]);
 
-function App() {
-  return <RouterProvider router={router} />
+const App = () => {
+    return <RouterProvider router={router} />
 }
 
 export default App;
