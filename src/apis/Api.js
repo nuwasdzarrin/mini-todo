@@ -47,13 +47,6 @@ const Api = {
             return Axios.delete(
                 Path.todo_item.detail.replace("{parent_id}", parent_id).replace("{id}", id));
         },
-    },
-    user: {
-        index: (params) => {
-            return Axios.get('http://jsonplaceholder.typicode.com/users', {
-                params: params,
-            });
-        },
     }
 }
 
