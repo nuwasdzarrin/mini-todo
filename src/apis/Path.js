@@ -1,5 +1,4 @@
 const path = {
-    base: "/api",
     header: {
         content_type: "application/json",
         accept: "application/json",
