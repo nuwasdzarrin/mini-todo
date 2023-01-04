@@ -8,9 +8,9 @@ import {Add as AddIcon} from '@mui/icons-material';
 import GroupCard from "../components/cards/GroupCard";
 import CreateEditModal from "../components/modals/CreateEditModal";
 import {connect} from "react-redux";
-import {getTodos} from "../store/actions/todoAction";
+import {getTodos, setModalForm} from "../store/actions/todoAction";
 
-const TodoPage = ({todos, modal_form, getTodos}) => {
+const TodoPage = ({todos, modal_form, getTodos, setModalForm}) => {
     useEffect(() => {
         getTodos()
     }, [getTodos])
@@ -18,7 +18,17 @@ const TodoPage = ({todos, modal_form, getTodos}) => {
         return (
             <div className={'todFlexCenterStart todHeaderPage'}>
                 <div className={'title todMarginRight10'}>Product Map</div>
-                <PrimaryButton label={'Add New Group'} icon={<AddIcon />}/>
+                <div onClick={
+                    ()=> {
+                        setModalForm({
+                            is_show: true,
+                            type: 'add_group',
+                            data: {}
+                        })
+                    }
+                }>
+                    <PrimaryButton label={'Add New Group'} icon={<AddIcon />} />
+                </div>
             </div>
         )
     }
@@ -54,4 +64,5 @@ const mapStateToProps = state => ({
     todos: state.todoReducer.todos,
     modal_form: state.todoReducer.modal_form,
 })
-export default connect(mapStateToProps,{getTodos})(TodoPage)
+const mapDispatchToProps = { getTodos, setModalForm }
+export default connect(mapStateToProps, mapDispatchToProps)(TodoPage)

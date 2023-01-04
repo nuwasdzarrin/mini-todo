@@ -5,6 +5,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import {connect} from "react-redux";
 import {closeModalForm} from "../../store/actions/todoAction";
 import {storeTodoItem, updateTodoItem, destroyTodoItem} from '../../store/actions/todoItemAction'
+import {storeTodo} from '../../store/actions/todoAction'
 import {WarningAmber} from "@mui/icons-material";
 
 const theme = createTheme({
@@ -18,10 +19,11 @@ const theme = createTheme({
 const CreateEditModal = (props) => {
     const [name, setName] = useState('')
     const [progress, setProgress] = useState(0)
+    const [description, setDescription] = useState('')
     let type = props.modal_form.type
     useEffect(() => {
         let modal_form = props.modal_form
-        if (modal_form && type === 'edit') {
+        if (modal_form && modal_form.type === 'edit') {
             let data = modal_form.data
             setName(data.task_name)
             setProgress(data.task_progress_percentage)
@@ -34,6 +36,13 @@ const CreateEditModal = (props) => {
                 <Box sx={{mb: 3, display: 'flex'}}>
                     <WarningAmber color={'error'} sx={{mr: 1}} />
                     <div className={'title'}>Delete Task</div>
+                </Box>
+            )
+        }
+        if (type === 'add_group') {
+            return (
+                <Box sx={{mb: 3}}>
+                    <div className={'title'}>Create Group</div>
                 </Box>
             )
         }
@@ -57,6 +66,8 @@ const CreateEditModal = (props) => {
             props.updateTodoItem(payload.data.group_id, payload.data.task_id, payload.store)
         else if (type === 'delete')
             props.destroyTodoItem(payload.data.group_id, payload.data.task_id)
+        else if (type === 'add_group')
+            props.storeTodo({title: name, description})
     }
     return (
         <div className={'todModal'}>
@@ -72,27 +83,34 @@ const CreateEditModal = (props) => {
                             </div> :
                             <div>
                                 <FormControl sx={{mb: 3, width: '100%'}} variant="outlined">
-                                    <div className={'todLabelInput'}>Task Name</div>
+                                    <div className={'todLabelInput'}>{type === 'add_group' ? 'Group Name' : 'Task Name'}</div>
                                     <OutlinedInput
-                                        id="outlined-adornment-weight"
-                                        aria-describedby="outlined-weight-helper-text"
-                                        placeholder={'Type your Task'}
+                                        placeholder={`Type your ${type === 'add_group' ? 'group' : 'task'}`}
                                         value={name}
                                         // disabled={props.modal_form.type === 'edit'}
                                         onChange={e => setName(e.target.value)}
                                     />
                                 </FormControl>
-                                <FormControl sx={{mb: 10, width: '50%'}} variant="outlined">
-                                    <div className={'todLabelInput'}>Progress</div>
-                                    <OutlinedInput
-                                        id="outlined-adornment-weight"
-                                        type={'number'}
-                                        aria-describedby="outlined-weight-helper-text"
-                                        placeholder={'70'}
-                                        value={progress}
-                                        onChange={e => setProgress(e.target.value)}
-                                    />
-                                </FormControl>
+                                {type === 'add_group' ?
+                                    <FormControl sx={{mb: 10, width: '100%'}} variant="outlined">
+                                        <div className={'todLabelInput'}>Description</div>
+                                        <OutlinedInput
+                                            type={'text'}
+                                            placeholder={'Description'}
+                                            value={description}
+                                            onChange={e => setDescription(e.target.value)}
+                                        />
+                                    </FormControl> :
+                                    <FormControl sx={{mb: 10, width: '50%'}} variant="outlined">
+                                        <div className={'todLabelInput'}>Progress</div>
+                                        <OutlinedInput
+                                            type={'number'}
+                                            placeholder={'70'}
+                                            value={progress}
+                                            onChange={e => setProgress(e.target.value)}
+                                        />
+                                    </FormControl>
+                                }
                             </div>
                         }
                         <div className={'footer'}>
@@ -118,7 +136,7 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = {
-    closeModalForm, storeTodoItem, updateTodoItem, destroyTodoItem
+    closeModalForm, storeTodoItem, updateTodoItem, destroyTodoItem, storeTodo
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(CreateEditModal);

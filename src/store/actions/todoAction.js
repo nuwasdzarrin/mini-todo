@@ -37,8 +37,19 @@ const getTodos = () => dispatch => {
     }
 }
 
-const storeTodos = () => async dispatch => {
-    console.log("Store todo")
+const storeTodo = (payload) => dispatch => {
+    try {
+        let todo_item = Api.todo.store(payload)
+        todo_item.then((res) => {
+            if (res.status === 201) {
+                dispatch(getTodos())
+                dispatch(closeModalForm())
+            }
+            return res
+        })
+    } catch (e) {
+        console.log(e)
+    }
 }
 
 const setActionActive = (payload) => async dispatch => {
@@ -48,7 +59,6 @@ const setActionActive = (payload) => async dispatch => {
     })
 }
 const setModalForm = (payload) => {
-    console.log("ini dia payload: ", payload)
     return {
         type: types.SET_MODAL_FORM,
         payload: payload
@@ -60,4 +70,4 @@ const closeModalForm = () => {
     }
 }
 
-export {getTodos, storeTodos, setActionActive, setModalForm, closeModalForm};
+export {getTodos, storeTodo, setActionActive, setModalForm, closeModalForm};
