@@ -8,6 +8,8 @@ import {Add as AddIcon} from '@mui/icons-material';
 import GroupCard from "../components/cards/GroupCard";
 import CreateEditModal from "../components/modals/CreateEditModal";
 import {connect} from "react-redux";
+import { DragDropContext } from 'react-dnd';
+import HTML5Backend from 'react-dnd-html5-backend';
 import {getTodos, setModalForm} from "../store/actions/todoAction";
 
 const TodoPage = ({todos, modal_form, getTodos, setModalForm}) => {
@@ -65,4 +67,4 @@ const mapStateToProps = state => ({
     modal_form: state.todoReducer.modal_form,
 })
 const mapDispatchToProps = { getTodos, setModalForm }
-export default connect(mapStateToProps, mapDispatchToProps)(TodoPage)
+export default DragDropContext(HTML5Backend)(connect(mapStateToProps, mapDispatchToProps)(TodoPage))

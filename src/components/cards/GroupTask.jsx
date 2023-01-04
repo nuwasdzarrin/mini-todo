@@ -5,8 +5,20 @@ import colors from '../../assets/styles/_colors.module.scss';
 import ControlModal from "../modals/ControlModal";
 import {connect} from "react-redux";
 import {setActionActive} from "../../store/actions/todoAction";
+import { DragSource } from 'react-dnd';
+import types from '../../store/types'
 
-
+const CardSource = {
+    beginDrag(props) {
+        return props;
+    }
+};
+function collect(connect, monitor) {
+    return {
+        connectDragSource: connect.dragSource(),
+        isDragging: monitor.isDragging()
+    }
+}
 const GroupTask= (props) => {
     let data = props.data
     return (
@@ -45,4 +57,4 @@ const mapStateToProps = state => ({
     is_modal_control: state.todoReducer.is_modal_control
 })
 
-export default connect(mapStateToProps, {setActionActive})(GroupTask)
+export default DragSource(types.CARD, CardSource, collect)(connect(mapStateToProps, {setActionActive})(GroupTask))
