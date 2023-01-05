@@ -1,18 +1,16 @@
 import React, {useEffect} from 'react';
-import {
-    CardContent,
-    Grid
-} from "@mui/material";
+import {CardContent, Grid} from "@mui/material";
 import PrimaryButton from "../components/buttons/PrimaryButton";
 import {Add as AddIcon} from '@mui/icons-material';
 import GroupCard from "../components/cards/GroupCard";
-import CreateEditModal from "../components/modals/CreateEditModal";
+import GeneralModal from "../components/modals/GeneralModal";
 import {connect} from "react-redux";
-import { DragDropContext } from 'react-dnd';
-import HTML5Backend from 'react-dnd-html5-backend';
+import { DndProvider } from "react-dnd";
+import { HTML5Backend } from "react-dnd-html5-backend";
 import {getTodos, setModalForm} from "../store/actions/todoAction";
+import ModalLoading from "../components/modals/ModalLoading";
 
-const TodoPage = ({todos, modal_form, getTodos, setModalForm}) => {
+const TodoPage = ({todos, modal_form, getTodos, setModalForm, loading}) => {
     useEffect(() => {
         getTodos()
     }, [getTodos])
@@ -47,17 +45,20 @@ const TodoPage = ({todos, modal_form, getTodos, setModalForm}) => {
             <HeaderPage />
             <hr className={'todHrHeaderPage'}/>
             <CardContent>
-                <Grid container spacing={2}>
-                    {
-                        todos.map((todo, key) =>
-                            <Grid item xs={12} md={3} key={key}>
-                                <GroupCard type={convertType(key)} data={todo} />
-                            </Grid>
-                        )
-                    }
-                </Grid>
+                <DndProvider backend={HTML5Backend}>
+                    <Grid container spacing={2}>
+                        {
+                            todos.map((todo, key) =>
+                                <Grid item xs={12} md={3} key={key}>
+                                    <GroupCard type={convertType(key)} data={todo} />
+                                </Grid>
+                            )
+                        }
+                    </Grid>
+                </DndProvider>
             </CardContent>
-            {modal_form.is_show && <CreateEditModal />}}'
+            {modal_form.is_show && <GeneralModal />}
+            {loading && <ModalLoading />}
         </>
     )
 }
@@ -65,6 +66,7 @@ const TodoPage = ({todos, modal_form, getTodos, setModalForm}) => {
 const mapStateToProps = state => ({
     todos: state.todoReducer.todos,
     modal_form: state.todoReducer.modal_form,
+    loading: state.todoReducer.loading
 })
 const mapDispatchToProps = { getTodos, setModalForm }
-export default DragDropContext(HTML5Backend)(connect(mapStateToProps, mapDispatchToProps)(TodoPage))
+export default connect(mapStateToProps, mapDispatchToProps)(TodoPage)

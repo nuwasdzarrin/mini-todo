@@ -13,14 +13,12 @@ const initialState = {
 
 // eslint-disable-next-line import/no-anonymous-default-export
 export default function(state = initialState, action){
-    console.log("reducer action payload: ", action.payload)
     let {type, payload} = action
     switch(type){
         case types.GET_TODOS:
             return {
                 ...state,
-                todos: payload,
-                loading: false
+                todos: payload
             }
         case types.SET_ACTION_ACTIVE:
             return {
@@ -44,6 +42,11 @@ export default function(state = initialState, action){
                     ...state.modal_form,
                     is_show: false
                 }
+            }
+        case types.LOADING:
+            return {
+                ...state,
+                loading: payload
             }
         default: return state
     }
