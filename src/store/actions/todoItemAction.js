@@ -1,8 +1,9 @@
 import Api from '../../apis/Api'
-import {closeModalForm, getTodos, setActionActive} from './todoAction'
+import {closeModalForm, getTodos, setActionActive, setLoading} from './todoAction'
 
 const storeTodoItem = (parentId, payload) => dispatch => {
     try {
+        dispatch(setLoading(true))
         let todo_item = Api.todo_item.store(parentId, payload)
         todo_item.then((res) => {
             if (res.status === 201) {
@@ -13,11 +14,14 @@ const storeTodoItem = (parentId, payload) => dispatch => {
         })
     } catch (e) {
         console.log(e)
+    } finally {
+        dispatch(setLoading(false))
     }
 }
 
 const updateTodoItem = (parentId, taskId, payload) => dispatch => {
     try {
+        dispatch(setLoading(true))
         let todo_item = Api.todo_item.update(parentId, taskId, payload)
         todo_item.then((res) => {
             if (res.status === 200) {
@@ -29,11 +33,14 @@ const updateTodoItem = (parentId, taskId, payload) => dispatch => {
         })
     } catch (e) {
         console.log(e)
+    } finally {
+        dispatch(setLoading(false))
     }
 }
 
 const destroyTodoItem = (parentId, taskId) => dispatch => {
     try {
+        dispatch(setLoading(true))
         let todo_item = Api.todo_item.destroy(parentId, taskId)
         todo_item.then((res) => {
             dispatch(getTodos())
@@ -42,6 +49,8 @@ const destroyTodoItem = (parentId, taskId) => dispatch => {
         })
     } catch (e) {
         console.log(e)
+    } finally {
+        dispatch(setLoading(false))
     }
 }
 

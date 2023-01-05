@@ -16,7 +16,7 @@ const theme = createTheme({
     },
 });
 
-const CreateEditModal = (props) => {
+const GeneralModal = (props) => {
     const [name, setName] = useState('')
     const [progress, setProgress] = useState(0)
     const [description, setDescription] = useState('')
@@ -139,4 +139,4 @@ const mapDispatchToProps = {
     closeModalForm, storeTodoItem, updateTodoItem, destroyTodoItem, storeTodo
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(CreateEditModal);
+export default connect(mapStateToProps, mapDispatchToProps)(GeneralModal);

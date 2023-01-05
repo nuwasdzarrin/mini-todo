@@ -1,16 +1,29 @@
 import React, {useState} from 'react';
+import { useNavigate } from "react-router-dom";
 import {FormControl, InputLabel, InputAdornment, OutlinedInput, IconButton, Box} from '@mui/material';
 import {Visibility, VisibilityOff} from '@mui/icons-material';
 import PrimaryButton from "../components/buttons/PrimaryButton";
+import Api from '../apis/Api';
+import axios from "axios";
 
 const LoginPage= () => {
     const [showPassword, setShowPassword] = React.useState(false)
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
+    const navigate = useNavigate();
 
     const handleClickShowPassword = () => setShowPassword((show) => !show)
-    const onLogin= () => {
-
+    const onLogin= (e) => {
+        e.preventDefault()
+        Api.auth.login({email, password}).then(res => {
+            console.log("res: ", res)
+            if (res.status === 200) {
+                axios.defaults.headers['Authorization'] = `Bearer ${res.data.auth_token}`
+                navigate('/')
+            }
+        }).catch(err => {
+            throw err
+        })
     }
     return (
         <div className={'todAuth'}>
@@ -23,7 +36,7 @@ const LoginPage= () => {
                             id="auth-email"
                             type="email"
                             label="Email"
-                            placeholder={'Email'}
+                            placeholder={'tony@stark.com'}
                             value={email}
                             onChange={e => setEmail(e.target.value)}
                         />

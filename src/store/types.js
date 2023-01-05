@@ -5,6 +5,7 @@ const types= {
     CLOSE_MODAL_FORM: 'CLOSE_MODAL_FORM',
     SET_MODAL_ADD: 'SET_MODAL_ADD',
     SET_MODAL_EDIT: 'SET_MODAL_EDIT',
+    LOADING: 'LOADING'
 }
 
 export default types

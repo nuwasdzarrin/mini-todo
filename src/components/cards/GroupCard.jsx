@@ -12,13 +12,17 @@ const GroupCard = (props) => {
     const styleBtnAddNewTask = {color: colors.textNewTask, fontSize: '12px'}
     let data= props.data
 
+    const moveCardHandler = (dragIndex, hoverIndex) => {
+        // console.log("monitor drag: ", dragIndex, hoverIndex)
+    };
+
     return (
         <div className={`todGroupCard ${props.type}`}>
             <GroupLabel label={data.title} classColor={props.type} />
             <div className={'monthLabel todMarginY8'}>{data.description}</div>
             {
-                data.items.map(it =>
-                    <GroupTask data={it} key={it.id}/>
+                data.items.map((it) =>
+                    <GroupTask data={it} key={it.id} index={data.id} moveCardHandler={moveCardHandler}/>
                 )
             }
             <Button sx={styleBtnAddNewTask} startIcon={<ControlPointIcon/>} onClick={
